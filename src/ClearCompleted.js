@@ -1,13 +1,17 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { clearCompleteTodos } from "./actions/todos";
 
-class ClearCompleted extends React.Component {
-  render() {
-    return (
-      <button onClick={this.props.clearTodo} className="clear-completed">
-        Clear completed
-      </button>
-    );
-  }
-}
+const ClearCompleted = () => {
+  const dispatch = useDispatch();
+  return (
+    <button
+      onClick={() => dispatch(clearCompleteTodos())}
+      className='clear-completed'
+    >
+      Clear completed
+    </button>
+  );
+};
 
 export default ClearCompleted;

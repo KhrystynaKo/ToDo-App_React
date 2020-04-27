@@ -1,36 +1,51 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setfilterTodo } from "./actions/filter";
+import {
+  FILTER_ALL,
+  FILTER_ACTIVE,
+  FILTER_COMPLETED,
+} from "./constants/filters";
 
-class Filters extends React.Component {
-  render() {
-    return (
-      <ul className="filters">
-        <li>
-          <button
-            onClick={this.props.showAll}
-            className={this.props.activFilter === "all" ? "selected" : ""}
-          >
-            All
-          </button>
-        </li>
-        <li>
-          <button
-            onClick={this.props.showActive}
-            className={this.props.activFilter === "active" ? "selected" : ""}
-          >
-            Active
-          </button>
-        </li>
-        <li>
-          <button
-            onClick={this.props.showCompleted}
-            className={this.props.activFilter === "completed" ? "selected" : ""}
-          >
-            Completed
-          </button>
-        </li>
-      </ul>
-    );
-  }
-}
+const Filters = ({ filter }) => {
+  const dispatch = useDispatch();
+  return (
+    <ul className='filters'>
+      <li>
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+            dispatch(setfilterTodo(FILTER_ALL));
+          }}
+          className={filter === "all" ? "selected" : ""}
+        >
+          All
+        </button>
+      </li>
+      <li>
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+            dispatch(setfilterTodo(FILTER_ACTIVE));
+          }}
+          className={filter === "active" ? "selected" : ""}
+        >
+          Active
+        </button>
+      </li>
+      <li>
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+            dispatch(setfilterTodo(FILTER_COMPLETED));
+          }}
+          className={filter === "completed" ? "selected" : ""}
+        >
+          Completed
+        </button>
+      </li>
+    </ul>
+  );
+};
 
 export default Filters;

@@ -1,44 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addTodo } from "./actions/todos";
 
-class Header extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      title: ""
-    };
-    this.onChange = this.onChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+const Header = () => {
+  const dispatch = useDispatch();
+  const [title, setTitle] = useState("");
 
-  onChange(event) {
-    this.setState({
-      title: event.target.value
-    });
-  }
-  handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault();
-
-    if (this.state.title.trim()) {
-      this.props.addTodo(this.state.title);
-      this.setState({ title: "" });
+    if (title.trim()) {
+      dispatch(addTodo(title));
+      setTitle("");
     }
-  }
-  render() {
-    return (
-      <header className="header">
-        <h1>todos</h1>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            name="title"
-            className="new-todo"
-            placeholder="What needs to be done?"
-            value={this.state.title}
-            onChange={this.onChange}
-          />
-        </form>
-      </header>
-    );
-  }
-}
+  };
+
+  return (
+    <header className='header'>
+      <h1>todos</h1>
+      <form onSubmit={(event) => handleSubmit(event)}>
+        <input
+          name='title'
+          className='new-todo'
+          placeholder='What needs to be done?'
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+        />
+      </form>
+    </header>
+  );
+};
 
 export default Header;
